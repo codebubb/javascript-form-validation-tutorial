@@ -21,28 +21,30 @@ const validateForm = formSelector => {
         )} characters`,
     },
     {
+      attribute: 'match',
+      isValid: input => {
+        const matchSelector = input.getAttribute('match');
+        const matchedElement = formElement.querySelector(`#${matchSelector}`);
+        return (
+          matchedElement && matchedElement.value.trim() === input.value.trim()
+        );
+      },
+      errorMessage: (input, label) => {
+        const matchSelector = input.getAttribute('match');
+        const matchedElement = formElement.querySelector(`#${matchSelector}`);
+        const matchedLabel =
+          matchedElement.parentElement.parentElement.querySelector('label');
+
+        return `${label.textContent} should match ${matchedLabel.textContent}`;
+      },
+    },
+    {
       attribute: 'pattern',
       isValid: input => {
         const patternRegex = new RegExp(input.pattern);
         return patternRegex.test(input.value);
       },
-      errorMessage: (input, label) =>
-        `${label.textContent} should be a valid email`,
-    },
-    {
-      attribute: 'match',
-      isValid: input => {
-        const matchSelector = input.getAttribute('match');
-        const matchedElem = document.querySelector(`#${matchSelector}`);
-        return matchedElem && matchedElem.value.trim() === input.value.trim();
-      },
-      errorMessage: (input, label) => {
-        const matchSelector = input.getAttribute('match');
-        const matchedElem = document.querySelector(`#${matchSelector}`);
-        const matchedLabel =
-          matchedElem.parentElement.parentElement.querySelector('label');
-        return `${label.textContent} should match ${matchedLabel.textContent}`;
-      },
+      errorMessage: (input, label) => `Not a valid ${label.textContent}`,
     },
     {
       attribute: 'required',
@@ -74,10 +76,18 @@ const validateForm = formSelector => {
       errorContainer.textContent = '';
       input.classList.add('border-green-700');
       input.classList.remove('border-red-700');
-      errorIcon.classList.add('hidden');
       successIcon.classList.remove('hidden');
+      errorIcon.classList.add('hidden');
     }
   };
+
+  formElement.setAttribute('novalidate', '');
+
+  Array.from(formElement.elements).forEach(element => {
+    element.addEventListener('blur', event => {
+      validateSingleFormGroup(event.srcElement.parentElement.parentElement);
+    });
+  });
 
   const validateAllFormGroups = formToValidate => {
     const formGroups = Array.from(
@@ -89,17 +99,6 @@ const validateForm = formSelector => {
     });
   };
 
-  // Disable HTML5 Validation
-  formElement.setAttribute('novalidate', '');
-
-  // Enable validation for each control whilst updating form
-  Array.from(formElement.elements).forEach(element =>
-    element.addEventListener('blur', event => {
-      validateSingleFormGroup(event.srcElement.parentElement.parentElement);
-    })
-  );
-
-  // Only validate form when submitting
   formElement.addEventListener('submit', event => {
     event.preventDefault();
     validateAllFormGroups(formElement);
