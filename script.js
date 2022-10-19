@@ -79,8 +79,33 @@ const validateForm = formSelector => {
 
     let formGroupError = false;
     for (const option of validationOptions) {
-      if (input.hasAttribute(option.attribute)) {
-        console.log(label.textContent, option.isValid(input));
+      // Custom radio or multiple input specific check
+      if (formGroup.hasAttribute(option.attribute)) {
+        // We need a different label otherwise we will get something like 'Ham' is required if we take the name from the label of the radio
+        const formGroupLabel = formGroup.querySelector('p');
+        // We're dealing with multiple inputs so lets get all of them
+        const allInnerInputs = Array.from(
+          formGroup.querySelectorAll('input')
+        );
+        // And for a radio, only one can be filled out so we need to check if one is valid (could just do a simple check for the checked property here but using what we've already got)
+        const anyInnerInputValid = allInnerInputs.some(innerInput =>
+          option.isValid(innerInput)
+        );
+
+        // If none of the radios are checked, show the error...
+        if (!anyInnerInputValid) {
+          {
+            errorContainer.textContent = option.errorMessage(
+              input,
+              formGroupLabel // Using the updated label (the <p> tag) not the label next to the radio
+            );
+            input.classList.add('border-red-700');
+            input.classList.remove('border-green-700');
+            successIcon.classList.add('hidden');
+            errorIcon.classList.remove('hidden');
+            formGroupError = true;
+          }
+        }
       }
       if (
         input.hasAttribute(option.attribute) &&

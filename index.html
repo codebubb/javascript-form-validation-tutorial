@@ -75,40 +75,39 @@
           <a class="text-blue-700" href="#">Login here</a> instead.
         </p>
         <form id="registrationForm">
-          <div class="formGroup flex flex-col my-4">
+          <div required class="formGroup flex flex-col my-4">
             <p>Pizza Preference</p>
-            <div class="flex">
+            <div class="flex items-center">
               <input
-                required
                 type="radio"
                 name="pizzaPreference"
                 value="ham"
                 id="pizzaChoice1"
-                class="w-full border-b-2 border-black outline-none py-2"
+                class="mr-2 border-b-2 border-black outline-none py-2"
               />
-              <label for="pizzaChoice1">Ham</label>
+              <label class="mr-4" for="pizzaChoice1">Ham</label>
               <input
-                required
                 type="radio"
                 name="pizzaPreference"
                 value="hamAndPineapple"
                 id="pizzaChoice2"
-                class="w-full border-b-2 border-black outline-none py-2"
+                class="mr-2 border-b-2 border-black outline-none py-2"
               />
-              <label for="pizzaChoice2">Ham & Pineapple</label>
+              <label class="mr-4" for="pizzaChoice2"
+                >Ham & Pineapple</label
+              >
               <input
-                required
                 type="radio"
                 name="pizzaPreference"
                 value="allPineapple"
                 id="pizzaChoice3"
-                class="w-full border-b-2 border-black outline-none py-2"
+                class="mr-2 border-b-2 border-black outline-none py-2"
               />
               <label for="pizzaChoice3">A whole Pineapple</label>
-              <span class="error-icon hidden -ml-6 text-red-700">
+              <span class="error-icon hidden ml-12 text-red-700">
                 <i class="fa-solid fa-circle-exclamation"></i>
               </span>
-              <span class="success-icon hidden -ml-6 text-green-700">
+              <span class="success-icon hidden ml-12 text-green-700">
                 <i class="fa-solid fa-circle-check"></i>
               </span>
             </div>
