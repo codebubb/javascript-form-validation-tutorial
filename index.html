@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <title>JavaScript form validation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -22,7 +25,8 @@
             rgba(121, 30, 77, 0.8)
           ),
           url('./person.jpg');
-        filter: blur(6px);
+        filter: blur(50px);
+        transform: scale(1.4);
       }
 
       .side-column {
@@ -40,11 +44,15 @@
     <div class="h-full w-full fixed top-0 background"></div>
     <div class="w-full px-8 mt-32 flex shadow-2xl">
       <div class="w-1/2 p-12 side-column">
-        <h1 class="text-white text-8xl mt-16 font-bold">Hello World.</h1>
+        <h1 class="text-white text-8xl mt-16 font-bold">
+          Hello World.
+        </h1>
         <p class="text-white my-8">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </p>
-        <p class="text-white my-8 font-bold">Register with social media</p>
+        <p class="text-white my-8 font-bold">
+          Register with social media
+        </p>
         <div class="flex gap-8">
           <div
             class="flex items-center gap-4 text-sm bg-blue-900 text-white px-8 py-2 rounded-full"
@@ -68,73 +76,35 @@
         </p>
         <form id="registrationForm">
           <div class="formGroup flex flex-col my-4">
-            <label for="firstName">First Name</label>
-            <div class="flex items-center">
+            <p>Pizza Preference</p>
+            <div class="flex">
               <input
                 required
-                minlength="5"
-                type="text"
-                id="firstName"
+                type="radio"
+                name="pizzaPreference"
+                value="ham"
+                id="pizzaChoice1"
                 class="w-full border-b-2 border-black outline-none py-2"
               />
-              <span class="error-icon hidden -ml-6 text-red-700">
-                <i class="fa-solid fa-circle-exclamation"></i>
-              </span>
-              <span class="success-icon hidden -ml-6 text-green-700">
-                <i class="fa-solid fa-circle-check"></i>
-              </span>
-            </div>
-            <div class="error text-red-700 py-2"></div>
-          </div>
-          <div class="formGroup flex flex-col my-4">
-            <label for="email">Email Address</label>
-            <div class="flex items-center">
+              <label for="pizzaChoice1">Ham</label>
               <input
                 required
-                pattern="^(.+)@(.+)$"
-                type="email"
-                id="email"
+                type="radio"
+                name="pizzaPreference"
+                value="hamAndPineapple"
+                id="pizzaChoice2"
                 class="w-full border-b-2 border-black outline-none py-2"
               />
-              <span class="error-icon hidden -ml-6 text-red-700">
-                <i class="fa-solid fa-circle-exclamation"></i>
-              </span>
-              <span class="success-icon hidden -ml-6 text-green-700">
-                <i class="fa-solid fa-circle-check"></i>
-              </span>
-            </div>
-            <div class="error text-red-700 py-2"></div>
-          </div>
-          <div class="formGroup flex flex-col my-4">
-            <label for="password">Password</label>
-            <div class="flex items-center">
+              <label for="pizzaChoice2">Ham & Pineapple</label>
               <input
                 required
-                minlength="8"
-                type="password"
-                id="password"
+                type="radio"
+                name="pizzaPreference"
+                value="allPineapple"
+                id="pizzaChoice3"
                 class="w-full border-b-2 border-black outline-none py-2"
               />
-              <span class="error-icon hidden -ml-6 text-red-700">
-                <i class="fa-solid fa-circle-exclamation"></i>
-              </span>
-              <span class="success-icon hidden -ml-6 text-green-700">
-                <i class="fa-solid fa-circle-check"></i>
-              </span>
-            </div>
-            <div class="error text-red-700 py-2"></div>
-          </div>
-          <div class="formGroup flex flex-col my-4">
-            <label for="confirmPassword">Confirm Password</label>
-            <div class="flex items-center">
-              <input
-                match="password"
-                required
-                minlength="8"
-                type="password"
-                id="confirmPassword"
-                class="w-full border-b-2 border-black outline-none py-2"
-              />
+              <label for="pizzaChoice3">A whole Pineapple</label>
               <span class="error-icon hidden -ml-6 text-red-700">
                 <i class="fa-solid fa-circle-exclamation"></i>
               </span>
@@ -153,6 +123,7 @@
         </form>
       </div>
     </div>
+
     <script src="/script.js"></script>
   </body>
 </html>

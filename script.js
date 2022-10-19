@@ -5,7 +5,8 @@ const validateForm = formSelector => {
     {
       attribute: 'minlength',
       isValid: input =>
-        input.value && input.value.length >= parseInt(input.minLength, 10),
+        input.value &&
+        input.value.length >= parseInt(input.minLength, 10),
       errorMessage: (input, label) =>
         `${label.textContent} needs to be at least ${input.minLength} characters`,
     },
@@ -16,7 +17,9 @@ const validateForm = formSelector => {
         input.value.length <=
           parseInt(input.getAttribute('custommaxlength'), 10),
       errorMessage: (input, label) =>
-        `${label.textContent} needs to be less than ${input.getAttribute(
+        `${
+          label.textContent
+        } needs to be less than ${input.getAttribute(
           'custommaxlength'
         )} characters`,
     },
@@ -24,16 +27,23 @@ const validateForm = formSelector => {
       attribute: 'match',
       isValid: input => {
         const matchSelector = input.getAttribute('match');
-        const matchedElement = formElement.querySelector(`#${matchSelector}`);
+        const matchedElement = formElement.querySelector(
+          `#${matchSelector}`
+        );
         return (
-          matchedElement && matchedElement.value.trim() === input.value.trim()
+          matchedElement &&
+          matchedElement.value.trim() === input.value.trim()
         );
       },
       errorMessage: (input, label) => {
         const matchSelector = input.getAttribute('match');
-        const matchedElement = formElement.querySelector(`#${matchSelector}`);
+        const matchedElement = formElement.querySelector(
+          `#${matchSelector}`
+        );
         const matchedLabel =
-          matchedElement.parentElement.parentElement.querySelector('label');
+          matchedElement.parentElement.parentElement.querySelector(
+            'label'
+          );
 
         return `${label.textContent} should match ${matchedLabel.textContent}`;
       },
@@ -44,12 +54,19 @@ const validateForm = formSelector => {
         const patternRegex = new RegExp(input.pattern);
         return patternRegex.test(input.value);
       },
-      errorMessage: (input, label) => `Not a valid ${label.textContent}`,
+      errorMessage: (input, label) =>
+        `Not a valid ${label.textContent}`,
     },
     {
       attribute: 'required',
-      isValid: input => input.value.trim() !== '',
-      errorMessage: (input, label) => `${label.textContent} is required`,
+      isValid: input => {
+        if (input.type === 'radio') {
+          return input.checked;
+        }
+        return input.value.trim() !== '';
+      },
+      errorMessage: (input, label) =>
+        `${label.textContent} is required`,
     },
   ];
 
@@ -62,8 +79,17 @@ const validateForm = formSelector => {
 
     let formGroupError = false;
     for (const option of validationOptions) {
-      if (input.hasAttribute(option.attribute) && !option.isValid(input)) {
-        errorContainer.textContent = option.errorMessage(input, label);
+      if (input.hasAttribute(option.attribute)) {
+        console.log(label.textContent, option.isValid(input));
+      }
+      if (
+        input.hasAttribute(option.attribute) &&
+        !option.isValid(input)
+      ) {
+        errorContainer.textContent = option.errorMessage(
+          input,
+          label
+        );
         input.classList.add('border-red-700');
         input.classList.remove('border-green-700');
         successIcon.classList.add('hidden');
@@ -85,7 +111,9 @@ const validateForm = formSelector => {
 
   Array.from(formElement.elements).forEach(element => {
     element.addEventListener('blur', event => {
-      validateSingleFormGroup(event.srcElement.parentElement.parentElement);
+      validateSingleFormGroup(
+        event.srcElement.parentElement.parentElement
+      );
     });
   });
 
@@ -97,6 +125,12 @@ const validateForm = formSelector => {
     formGroups.forEach(formGroup => {
       validateSingleFormGroup(formGroup);
     });
+
+    console.log(
+      Array.from(
+        document.getElementById('registrationForm').elements
+      ).map(element => element.checked)
+    );
   };
 
   formElement.addEventListener('submit', event => {
